@@ -30,12 +30,8 @@ func main() {
 		return
 	}
 
-	fmt.Println(result)
 	now := time.Now()
 	for _, s := range result.Snapshots {
-		fmt.Println(s.StartTime)
-		fmt.Println(now.Sub(*s.StartTime))
-		fmt.Println(now.Sub(*s.StartTime).Hours())
 		// Delete the snapshot if it is more than 5 days old
 		if now.Sub(*s.StartTime).Hours() > 120 {
 			input := &ec2.DeleteSnapshotInput{
