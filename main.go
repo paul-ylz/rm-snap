@@ -4,13 +4,14 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 
 	"github.com/aws/aws-sdk-go/service/ec2"
 )
 
-func main() {
+func rm_snap() (string, error) {
 	sess := session.Must(session.NewSession())
 	svc := ec2.New(sess)
 	input := &ec2.DescribeSnapshotsInput{
@@ -26,8 +27,8 @@ func main() {
 	}
 	result, err := svc.DescribeSnapshots(input)
 	if err != nil {
-		fmt.Println(err.Error())
-		return
+
+		return err.Error(), err
 	}
 
 	now := time.Now()
@@ -44,4 +45,9 @@ func main() {
 			fmt.Println(del)
 		}
 	}
+	return "OK", nil
+}
+
+func main() {
+	lambda.Start(rm_snap)
 }
