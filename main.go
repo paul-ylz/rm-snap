@@ -11,7 +11,7 @@ import (
 	"github.com/aws/aws-sdk-go/service/ec2"
 )
 
-func rm_snap() (string, error) {
+func rmSnap() (string, error) {
 	sess := session.Must(session.NewSession())
 	svc := ec2.New(sess)
 	input := &ec2.DescribeSnapshotsInput{
@@ -49,5 +49,5 @@ func rm_snap() (string, error) {
 }
 
 func main() {
-	lambda.Start(rm_snap)
+	lambda.Start(rmSnap)
 }
